@@ -1,4 +1,4 @@
-require 'colorize'
+require 'colorize' #gem install colorize
 
 class Player
   def get_name()
@@ -13,6 +13,7 @@ class Player
     while true
       print "What class do you want to play?: "
       player_class = gets.chomp
+      player_class = player_class.downcase
       if ["cleric", "knight", "rogue", "assassin"].include? player_class
         system("clear")
         system("cls")
@@ -202,19 +203,18 @@ class Fight
     when "knight"
       case puts_spell
       when "block"
-        @pmana -= 2
-        puts @pmana
-        if @pmana >= 0
+        if @pmana >= 2
           @pdef += 3
           system("clear")
           system("cls")
           puts "You have increased your defense by 3, total def: #{@pdef}"
+          @pmana -= 2
           sleep 2
         else
-          puts "You dont have enough mana!"
-          sleep 2
           system("clear")
           system("cls")
+          puts "You dont have enough mana!"
+          sleep 2
         end
       end
     end
@@ -227,22 +227,16 @@ class Fight
       system("cls")
       puts "Your attack has been completely blocked."
       sleep 2
-      system("clear")
-      system("cls")
     elsif (damage > 0) && (crit > 0.8)
       system("clear")
       system("cls")
       puts "This was a critical strike. You have dealt #{damage} damage.".red
       sleep 2
-      system("clear")
-      system("cls")
     elsif damage > 0
       system("clear")
       system("cls")
       puts "You have dealt #{damage} damage."
       sleep 2
-      system("clear")
-      system("cls")
     end
     @ehp -= damage
   end
@@ -257,22 +251,16 @@ class Fight
       system("cls")
       puts "The enemy attack has been completely blocked.".green
       sleep 2
-      system("clear")
-      system("cls")
     elsif (damage > 0) && (crit > 0.8)
       system("clear")
       system("cls")
       puts "This was a critical strike. You have taken #{damage} damage.".red
       sleep 2
-      system("clear")
-      system("cls")
     elsif damage > 0
       system("clear")
       system("cls")
       puts "You have taken #{damage} damage."
       sleep 2
-      system("clear")
-      system("cls")
     end
     @php -= damage
   end
@@ -293,8 +281,6 @@ class Fight
         when "2"
           if @pmana >= 2
             player_spells("block")
-          elsif @pmana < 2
-            "You dont have enough mana!"
           end
         end
       end
@@ -327,5 +313,5 @@ intro = Intro.new
 
 intro.welcome(player_character[0], player_character[1])
 
-#fight = Fight.new(player_character[2], player_character[3], player_character[4], player_character[5], stats_enemy[0], stats_enemy[1], stats_enemy[2], player_character[1])
-#fight.combat
+fight = Fight.new(player_character[2], player_character[3], player_character[4], player_character[5], stats_enemy[0], stats_enemy[1], stats_enemy[2], player_character[1])
+fight.combat
