@@ -267,20 +267,31 @@ class Fight
   def combat()
     round_counter = 0
     while  true
+      system("clear")
+      system("cls")
       puts "Player stats\nhp: #{@php}\nad: #{@pad}\ndef: #{@pdef}\nmana: #{@pmana}"
       puts "\nEnemy stats\nhp: #{@ehp}\nad: #{@ead}\ndef: #{@edef}"
       round_counter += 1
       if round_counter % 2 == 0
         attack_enemy()
       elsif round_counter % 2 == 1
-        puts "\nChoose your action: 1. Attack, 2. Block"
-        action = gets.chomp
-        case action
-        when "1"
-          attack_player()
-        when "2"
-          if @pmana >= 2
-            player_spells("block")
+        if @class == "knight"
+          puts "\nChoose your action: 1. Attack, 2. Block"
+          action = gets.chomp
+          case action
+          when "1"
+            attack_player()
+          when "2"
+            if @pmana >= 2
+              player_spells("block")
+            end
+          end
+        elsif @class == "assassin"
+          puts "\nChoose your action: 1. Attack"
+          action = gets.chomp
+          case action
+          when "1"
+            attack_player()
           end
         end
       end
